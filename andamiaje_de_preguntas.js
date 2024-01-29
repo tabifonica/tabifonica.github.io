@@ -8,6 +8,7 @@ export default {
         "catalán",
         "vasco",
         "alemán",
+        "holandés",
         "ruso",
         "griego",
         "chino",
