@@ -22,8 +22,6 @@ export default {
         "quechua",
         "aymara",
         "guaraní",
-        "maya",
-        "nahua",
         "rapa nui"
     ],
     comer: [
