@@ -19,6 +19,7 @@ export default {
         "camboyano",
         "indonesio",
         "hindi",
+        "támil",
         "árabe",
         "creol haitiano",
         "mapudungún",
