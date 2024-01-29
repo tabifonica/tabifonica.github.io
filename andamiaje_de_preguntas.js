@@ -9,11 +9,13 @@ export default {
         "vasco",
         "alemán",
         "ruso",
+        "griego",
         "chino",
         "japonés",
         "tagalo",
         "coreano",
         "vietnamita",
+        "camboyano",
         "indonesio",
         "hindi",
         "árabe",
@@ -22,7 +24,8 @@ export default {
         "quechua",
         "aymara",
         "guaraní",
-        "rapa nui"
+        "maya",
+        "rapanui"
     ],
     comer: [
         "mucho pan",
