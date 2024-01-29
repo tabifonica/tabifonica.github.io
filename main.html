@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Preguntas</title>
+</head>
+<body>
+    <div id="pregunta-container" style="margin-bottom: 20px;"></div>
+
+    <div id="respuesta-container" style="display: none;">
+        <input type="text" id="respuesta" placeholder="Escribe tu respuesta aquí">
+        <button id="btnEnviar">Enviar respuesta</button>
+    </div>
+
+    <script type="module" src="constructor_de_preguntas.js"></script>
+    <script type="module">
+        // Obtener el objeto "preguntas" desde "constructor_de_preguntas.js"
+        import construirPregunta from './constructor_de_preguntas.js';
+
+        let respuestaCorrecta;
+
+        // Función para mostrar una pregunta
+        function mostrarPregunta() {
+            let pregunta = construirPregunta();
+            console.log(pregunta);
+            respuestaCorrecta = pregunta[2];
+            
+            // Colocar la pregunta en el contenedor correspondiente
+            const preguntaContainer = document.getElementById('pregunta-container');
+            preguntaContainer.innerHTML = "Conjugue el verbo «" + pregunta[1] + "»:";
+            preguntaContainer.innerHTML += "<br><br>";
+            preguntaContainer.innerHTML += pregunta[0];
+
+            // Mostrar el contenedor de respuesta
+            const respuestaContainer = document.getElementById('respuesta-container');
+            respuestaContainer.style.display = 'block';
+
+            // Obtener el cuadro de texto y el botón de enviar respuesta
+            const btnEnviar = document.getElementById('btnEnviar');
+            btnEnviar.removeEventListener('click', manejarEnvío);
+            btnEnviar.addEventListener('click', manejarEnvío);
+        }
+
+        // Agregar un evento de clic al botón de enviar respuesta
+        function manejarEnvío() {
+            // Obtener la respuesta del usuario
+            let respuestaInput = document.getElementById('respuesta');
+            let respuesta = respuestaInput.value.trim().toLowerCase();
+            console.log(respuesta);
+
+            // Borrar el contenido del cuadro de texto
+            respuestaInput.value = '';
+
+            // Verificar si la respuesta es correcta
+            if (respuesta === respuestaCorrecta) {
+                alert('¡Respuesta correcta!');
+            } else {
+                alert('Respuesta incorrecta. La respuesta correcta es: ' + respuestaCorrecta);
+            }
+
+            // Obtener una nueva pregunta
+            mostrarPregunta();
+        };
+
+        // Mostrar una pregunta cuando se cargue la página
+        document.addEventListener('DOMContentLoaded', () => {
+            mostrarPregunta();
+        });
+    </script>
+</body>
+</html>
