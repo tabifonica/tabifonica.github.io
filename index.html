@@ -2,18 +2,22 @@
 <html>
 <head>
     <title>Oriel's website</title>
+    <style>
+        /* Estilos para los elementos dentro de los divs */
+        div > p, div > button {
+            display: inline-block;
+            vertical-align: middle; /* Alinea verticalmente los elementos */
+            margin: 0; /* Elimina los márgenes predeterminados */
+        }
+    </style>
 </head>
 <body>
     <div>
         <h1>Projects</h1>
-        <div>
-            <p>Spanish conjugation practice</p>
-            <button id="es.conjugator">Go</button>
-        </div>
-        <div>
-            <p>Latin declension practice</p>
-            <button id="latin.decliner">Go</button>
-        </div>
+        <p>Spanish conjugation practice</p>
+        <button id="es.conjugator">Go</button>
+        <p>Latin declension practice</p>
+        <button id="latin.decliner">Go</button>
     </div>
 
     <script>
