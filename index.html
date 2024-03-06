@@ -3,6 +3,12 @@
 <head>
     <title>Oriel's website</title>
     <style>
+        .option_container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px;
+        }
         button {
             display: inline-block;
             margin: 0;
@@ -10,10 +16,12 @@
     </style>
 </head>
 <body>
-    <div>
-        <h1>Projects</h1>
+    <h1>Projects</h1>
+    <div class="option_container">
         <p>Spanish conjugation practice</p>
         <button id="es.conjugator">Go</button>
+    </div>
+    <div class="option_container">
         <p>Latin declension practice</p>
         <button id="latin.decliner">Go</button>
     </div>
