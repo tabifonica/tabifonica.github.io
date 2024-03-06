@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Latin Declension Practice</title>
+
+    <!--should probs put this in a css file later lol-->
+    <style>
+        body {
+            background-color:lightsalmon;
+        }
+        #table-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 60px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            font-family: "Palatino", serif; /* Agrega esta línea para cambiar la fuente */
+            font-variant: "small-caps";
+        }
+        td {
+            font-size: 24px;
+            text-align: center;
+        }
+        input {
+            width: 90%;
+            font-size: 20px;
+            text-align: center;
+            background-color: lightyellow;
+        }
+        input::placeholder {
+            font-style: italic;
+            text-align: center;
+        }
+        #btnEnviar {
+            position: absolute;
+            align-self: flex-start;
+            bottom: -50px;
+            font-size: 18px;
+        }
+        #btnSiguiente {
+            position: absolute;
+            align-self: flex-start;
+            bottom: -50px;
+            font-size: 18px;
+        }
+        .correcta {
+            color: green;
+        }
+        .incorrecta {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!--Esta división contiene la tabla y también los botones-->
+    <div id="table-container" class="body">
+        <table>
+            <tr>
+                <th></th>
+                <th>Nōminatīvus</th>
+                <th>Accūsātīvus</th>
+                <th>Genitīvus</th>
+                <th>Datīvus</th>
+                <th>Ablātīvus</th>
+            </tr>
+            <tr>
+                <th>Singulāris</th>
+                <td><div id="NomSg"></div></td>
+                <td>
+                    <input id="AccSg" type="text" placeholder="accūsātīvus singulāris">
+                    <div class="feedback">
+                        <div id="checkAccSg"></div>
+                        <div id="messageAccSg"></div>
+                    </div>
+                </td>
+                <td>
+                    <input id="GenSg" type="text" placeholder="genitīvus singulāris">
+                    <div class="feedback">
+                        <div id="checkGenSg"></div>
+                        <div id="messageGenSg"></div>
+                    </div>
+                </td>
+                <td>
+                    <input id="DatSg" type="text" placeholder="datīvus singulāris">
+                    <div class="feedback">
+                        <div id="checkDatSg"></div>
+                        <div id="messageDatSg"></div>
+                    </div> 
+                </td>
+                <td>
+                    <input id="AblSg" type="text" placeholder="ablātīvus singulāris">
+                    <div class="feedback">
+                        <div id="checkAblSg"></div>
+                        <div id="messageAblSg"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Plurālis</th>
+                <td>
+                    <input id="NomPl" type="text" placeholder="nōminatīvus plurālis">
+                    <div class="feedback">
+                        <div id="checkNomPl"></div>
+                        <div id="messageNomPl"></div>
+                    </div>
+                </td>
+                <td>
+                    <input id="AccPl" type="text" placeholder="accūsatūvus plurālis">
+                    <div class="feedback">
+                        <div id="checkAccPl"></div>
+                        <div id="messageAccPl"></div>
+                    </div>
+                </td>
+                <td>
+                    <input id="GenPl" type="text" placeholder="genitīvus plurālis">
+                    <div class="feedback">
+                        <div id="checkGenPl"></div>
+                        <div id="messageGenPl"></div>
+                    </div>
+                </td>
+                <td>
+                    <input id="DatPl" type="text" placeholder="datīvus plurālis">
+                    <div class="feedback">
+                        <div id="checkDatPl"></div>
+                        <div id="messageDatPl"></div>
+                    </div>
+                </td>
+                <td>
+                    <input id="AblPl" type="text" placeholder="ablātivus plurālis">
+                    <div class="feedback">
+                        <div id="checkAblPl"></div>
+                        <div id="messageAblPl"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <button id="btnEnviar" type="submit">Enviar respuestas</button>
+        <button id="btnSiguiente" type="submit" style="display: none">Siguiente pregunta</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script type="module">
+        let nouns;
+        let noun;
+
+        // Al cargar la página, procesar CSV (después elejir sustantivo al azar)
+        document.addEventListener('DOMContentLoaded', () => {
+            processLatinNouns();
+        });
+
+        async function processLatinNouns() {
+            // Obtener el archivo CSV con la lista de sustantivos latinos
+            fetch('latinNounList.csv')
+            .then(response => response.text())
+            .then(data => {
+                // Parsear los datos del archivo CSV
+                const parsedData = Papa.parse(data, { header: true });
+                nouns = parsedData.data;
+
+                // elejir sustantivo al azar
+                pickLatinNoun();
+            })
+            .catch(error => {
+                console.error('Error al leer el archivo:', error);
+            });
+        }
+
+        function pickLatinNoun() {
+            // Elejir sustantivo al azar
+            noun = nouns[Math.floor(Math.random() * nouns.length)];
+            console.log(noun);
+
+            // Mostrar el sustantivo en la célula de 'NomSg'
+            const NomSgElement = document.getElementById("NomSg");
+            NomSgElement.innerHTML = noun["NomSg"];
+
+            // Crear un manejador de eventos para el botón de envíos
+            const btnEnviar = document.getElementById('btnEnviar');
+            btnEnviar.removeEventListener('click', manejarEnvío);
+            btnEnviar.addEventListener('click', manejarEnvío);
+        }
+
+        // Agregar un evento de clic al botón de enviar respuesta
+        function manejarEnvío() {
+            // Esconder el botón para Enviar
+            document.getElementById('btnEnviar').style.display = 'none';
+
+            // Obtener las respuestas
+            let respuestas = {
+                NomPl: document.getElementById('NomPl').value.trim().toLowerCase(),
+                AccSg: document.getElementById('AccSg').value.trim().toLowerCase(),
+                AccPl: document.getElementById('AccPl').value.trim().toLowerCase(),
+                GenSg: document.getElementById('GenSg').value.trim().toLowerCase(),
+                GenPl: document.getElementById('GenPl').value.trim().toLowerCase(),
+                DatSg: document.getElementById('DatSg').value.trim().toLowerCase(),
+                DatPl: document.getElementById('DatPl').value.trim().toLowerCase(),
+                AblSg: document.getElementById('AblSg').value.trim().toLowerCase(),
+                AblPl: document.getElementById('AblPl').value.trim().toLowerCase()
+            };
+            console.log(respuestas);
+
+            // Chequiar si las respuestas son correctas
+            for (let caso in respuestas) {
+                let checkElement = document.getElementById('check' + caso);
+                let messageElement = document.getElementById('message' + caso);
+                if (respuestas[caso] === noun[caso]) {
+                    checkElement.innerHTML = "✅";
+                    messageElement.innerHTML = "Responsa Recta!";
+                    messageElement.classList.add("correcta");
+                } else {
+                    checkElement.innerHTML = "❌";
+                    messageElement.innerHTML = "Responsa Recta: " + noun[caso];
+                    messageElement.classList.add("incorrecta")
+                }
+            }
+
+            // Mostrar el feedback
+            const feedback = document.querySelectorAll('.feedback');
+            feedback.forEach(f => f.style.display = 'block');
+
+            // Mostrar el botón de siguiente pregunta
+            document.getElementById('btnSiguiente').style.display = 'block';
+            btnSiguiente.removeEventListener('click', manejarSiguiente);
+            btnSiguiente.addEventListener('click', manejarSiguiente);
+        }
+
+        // Preparar todo para la siguiente pregunta
+        function manejarSiguiente() {
+            // Borrar el contenido del cuadro de texto
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => input.value = '');
+
+            // Esconder el botón para ir a la siguiente pregunta
+            document.getElementById('btnSiguiente').style.display = 'none';
+
+            // Esconder todo el feedback
+            const feedback = document.querySelectorAll('.feedback');
+            feedback.forEach(f => f.style.display = 'none');
+
+            // Borrar el contenido de los elementos de feedback
+            const checks = document.querySelectorAll('.feedback div');
+            checks.forEach(check => check.innerHTML = '');
+
+            // Borrar las clases de 'correcta' e 'incorrecta'
+            const messages = document.querySelectorAll('.feedback div');
+            messages.forEach(message => message.classList.remove('correcta', 'incorrecta'));
+
+            // Mostrar el botón de enviar respuestas
+            document.getElementById('btnEnviar').style.display = 'block';
+
+            // Elejir un nuevo sustantivo al azar
+            pickLatinNoun();
+        }
+    </script>
+</body>
+</html>
