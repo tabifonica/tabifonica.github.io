@@ -8,6 +8,34 @@
         body {
             background-color:lightsalmon;
         }
+        #backButton {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 20px;
+        }
+        #backButton > a {
+            border: 1px solid black;
+            padding: 10px;
+            text-decoration: none;
+            color: darkred;
+            background-color: wheat;
+            border-radius: 10px;
+        }
+        #definitions {
+            background-color:wheat;
+        }
+        #instructions {
+            text-align: center;
+            font-size: 24px;
+            padding-top: 30px;
+            padding-bottom: 20px;
+        }
+        #nounName {
+            font-style: italic;
+            font-weight: bold;
+            color: darkred;
+        }
         #table-container {
             position: relative;
             width: 100%;
@@ -26,10 +54,13 @@
             text-align: center;
             font-family: "Palatino", serif; /* Agrega esta línea para cambiar la fuente */
             font-variant: "small-caps";
+            padding-bottom: 30px;
+            color: darkred;
         }
         td {
             font-size: 24px;
             text-align: center;
+            padding-bottom: 30px;
         }
         input {
             width: 90%;
@@ -62,7 +93,15 @@
     </style>
 </head>
 <body>
-    <!--Esta división contiene la tabla y también los botones-->
+    <div id="backButton">
+        <a href="https://tabifonica.github.io/">Back</a>
+    </div>
+    <div id="definitions">
+        
+    </div>
+    <div id="instructions">
+        <p>Please complete the declension table for the Latin noun <i><span id="nounName"></span></i>:</p>
+    </div>
     <div id="table-container" class="body">
         <table>
             <tr>
@@ -144,8 +183,8 @@
                 </td>
             </tr>
         </table>
-        <button id="btnEnviar" type="submit">Enviar respuestas</button>
-        <button id="btnSiguiente" type="submit" style="display: none">Siguiente pregunta</button>
+        <button id="btnEnviar" type="submit">Check Answers</button>
+        <button id="btnSiguiente" type="submit" style="display: none">Next Question</button>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script type="module">
@@ -182,6 +221,7 @@
             // Mostrar el sustantivo en la célula de 'NomSg'
             const NomSgElement = document.getElementById("NomSg");
             NomSgElement.innerHTML = noun["NomSg"];
+            document.getElementById("nounName").innerHTML = noun["NomSg"];
 
             // Crear un manejador de eventos para el botón de envíos
             const btnEnviar = document.getElementById('btnEnviar');
