@@ -188,8 +188,10 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script type="module">
-        let nouns;
-        let noun;
+        let allNouns;
+        let nounsToGo;
+        let noun = null;
+        let nounIndex = null;
 
         // Al cargar la página, procesar CSV (después elejir sustantivo al azar)
         document.addEventListener('DOMContentLoaded', () => {
@@ -203,7 +205,8 @@
             .then(data => {
                 // Parsear los datos del archivo CSV
                 const parsedData = Papa.parse(data, { header: true });
-                nouns = parsedData.data;
+                allNouns = parsedData.data;
+                nounsToGo = [...allNouns];
 
                 // elejir sustantivo al azar
                 pickLatinNoun();
@@ -214,8 +217,25 @@
         }
 
         function pickLatinNoun() {
+            // Sacar el último sustantivo de la lista
+            if (nounIndex != null) {
+                nounsToGo.splice(nounIndex, 1);
+            }
+
+            // Renueva la lista si no queda ningún sustantivo
+            if (nounsToGo.length == 0) {
+                console.log("All nouns cycled through. Refilling nouns.");
+                console.log(allNouns);
+                nounsToGo = [...allNouns];
+            }
+
+            console.log(nounsToGo);
+            console.log(nounsToGo.length);
+
             // Elejir sustantivo al azar
-            noun = nouns[Math.floor(Math.random() * nouns.length)];
+            nounIndex = Math.floor(Math.random() * nounsToGo.length);
+            noun = nounsToGo[nounIndex];
+            console.log(nounIndex);
             console.log(noun);
 
             // Mostrar el sustantivo en la célula de 'NomSg'
